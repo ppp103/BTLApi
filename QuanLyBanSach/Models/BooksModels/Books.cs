@@ -1,4 +1,6 @@
-﻿namespace QuanLyBanSach.Models.BooksModels
+﻿using System.Runtime.CompilerServices;
+
+namespace QuanLyBanSach.Models.BooksModels
 {
     public class Books
     {
@@ -14,5 +16,6 @@
 		public string? TenSach { get; set; }
 		public decimal? GiaBan { get; set; }
 		public string? Anh { get; set; }
+		public string? MoTa { get; set; }
 	}
 }

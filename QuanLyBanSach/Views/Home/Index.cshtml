@@ -5,8 +5,8 @@
     Layout = "_UserLayout";
 }
 
-<div id="tg-homeslider" class="tg-homeslider tg-haslayout owl-carousel">
-	@foreach(var x in Model){
+<div id="tg-homeslider" class="tg-homeslider tg-haslayout owl-carousel displayBooks" data-display=0>
+@*	@foreach(var x in Model){
 	<div class="item" data-vide-bg="poster: ../User/images/slider/img-01.jpg" data-vide-options="position: 0% 50%">
 		<div class="container">
 			<div class="row">
@@ -26,7 +26,7 @@
 			</div>
 		</div>
 	</div>
-	}
+	}*@
 </div>
 <main id="tg-main" class="tg-main tg-haslayout">
 	<!--************************************
@@ -88,8 +88,8 @@
 				</div>
 			
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<div id="tg-bestsellingbooksslider" class="tg-bestsellingbooksslider tg-bestsellingbooks owl-carousel">
-						@foreach(var x in Model){
+					<div id="tg-bestsellingbooksslider" class="tg-bestsellingbooksslider tg-bestsellingbooks owl-carousel displayBooks" data-display=1>
+@*						@foreach(var x in Model){
 							<div class="item">
 								<div class="tg-postbook">
 									<figure class="tg-featureimg">
@@ -123,7 +123,7 @@
 									</div>
 								</div>
 							</div>
-						}
+						}*@
 					</div>
 				</div>
 			</div>
@@ -189,8 +189,8 @@
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 						<div class="row">
-							<div class="tg-newreleasebooks">
-								@foreach(var x in ViewBag.sachsapra){
+							<div class="tg-newreleasebooks displayBooks" data-display=2>
+	@*							@foreach(var x in ViewBag.sachsapra){
 								<div class="col-xs-4 col-sm-4 col-md-6 col-lg-4">
 									<div class="tg-postbook">
 										<figure class="tg-featureimg">
@@ -216,7 +216,7 @@
 										</div>
 									</div>
 								</div>
-								}
+								}*@
 							</div>
 						</div>
 					</div>
@@ -291,8 +291,8 @@
 						<a class="tg-btn" href="javascript:void(0);">Xem tất cả</a>
 					</div>
 				</div>
-				<div id="tg-pickedbyauthorslider" class="tg-pickedbyauthor tg-pickedbyauthorslider owl-carousel">
-					@foreach (var sp in Model)
+				<div id="tg-pickedbyauthorslider" class="tg-pickedbyauthor tg-pickedbyauthorslider owl-carousel displayBooks" data-display=3>
+@*					@foreach (var sp in Model)
 					{
 					<div class="item">
 						<div class="tg-postbook">
@@ -322,7 +322,7 @@
 							</div>
 						</div>
 					</div>
-					}
+					}*@
 						<div class="tg-postbook">
 							<figure class="tg-featureimg">
 								<div class="tg-bookimg">
@@ -365,18 +365,17 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-8 col-lg-push-2">
-						<div id="tg-testimonialsslider" class="tg-testimonialsslider tg-testimonials owl-carousel">
-							@foreach(var nxb in Model){
+						<div id="tg-testimonialsslider" class="tg-testimonialsslider tg-testimonials owl-carousel displayBooks" data-display=4>
+@*							@foreach(var nxb in Model){
 							<div class="item tg-testimonial">
 									<figure><img src="@Url.Content("../User/images/blog/" + @nxb.Anh )" alt="image description"></figure>
 									<blockquote><q>Kì thực trên mặt đất vốn làm gì có đường, người ta đi mãi thì thành đường thôi.</q></blockquote>
 								<div class="tg-testimonialauthor">
-									@*<h3>@nxb.MaNxbNavigation.TenNxb</h3>*@
 										<h3>@nxb.MaNxbNavigation.TenNxb</h3>
 									<span>Manager CIFP</span>
 								</div>
 							</div>
-							}
+							}*@
 						</div>
 					</div>
 				</div>
@@ -398,8 +397,8 @@
 						<a class="tg-btn" href="javascript:void(0);">Xem tất cả</a>
 					</div>
 				</div>
-				<div id="tg-authorsslider" class="tg-authors tg-authorsslider owl-carousel">
-					@foreach(var tacgia in Model){
+				<div id="tg-authorsslider" class="tg-authors tg-authorsslider owl-carousel displayBooks" data-display=5>
+@*					@foreach(var tacgia in Model){
 						<div class="item tg-author">
 							<figure><a href="javascript:void(0);"><img src="@Url.Content("../User/images/team/" + @tacgia.Anh )" alt="image description"></a></figure>
 							<div class="tg-authorcontent">
@@ -413,7 +412,7 @@
 							</div>
 						</div>
 					}
-					
+					*@
 					
 				</div>
 			</div>
@@ -467,7 +466,7 @@
 							}
 							else {
 								alert("Thêm thành công");
-								loadHeaderCart(); //Add Product success
+								loadHeaderCart();
 								location.reload();
 							}
 						},
@@ -481,6 +480,274 @@
 				$('#miniCart').load("/Ajax/HeaderCart");
 				$('#numberCart').load("/Ajax/NumberCart");
 			}
+
+			$.ajax({
+				type: 'GET',
+				url: 'https://localhost:7287/api/BooksApi',
+				dataType: 'json',
+				success: function (data) {
+					let str = ``;
+				
+					$('.displayBooks').each(function(index, section){
+						if(index == 0){
+							for(let i = 0; i < 2; i++){
+								str += `
+									<div class="item" data-vide-bg="poster: ../User/images/slider/img-01.jpg" data-vide-options="position: 0% 50%">
+										<div class="container">
+											<div class="row">
+												<div class="col-xs-12 col-sm-12 col-md-10 col-md-push-1 col-lg-8 col-lg-push-2">
+													<div class="tg-slidercontent">
+															<figure class="tg-authorimg"><a href="javascript:void(0);"><img src="../User/images/team/${data[i].anh}" alt="image description"></a></figure>
+														<h1>${data[i].tenTg}</h1>
+														<div class="tg-description">
+															<p>Dưới thiên nhân ta vô địch.</p>
+														</div>
+														<div class="tg-btns">
+															<a class="tg-btn" href="javascript:void(0);">Mua ngay</a>
+															<a class="tg-btn" href="javascript:void(0);">Đọc thêm</a>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								`
+							}
+							$('#tg-homeslider').owlCarousel('destroy')
+
+							$('#tg-homeslider').html(str);
+
+							$('#tg-homeslider').owlCarousel({
+								items: 1,
+								nav: true,
+								loop: true,
+								dots: true,
+								autoplay: false,
+								navText: [
+									'<i class="icon-chevron-left"></i>',
+									'<i class="icon-chevron-right"></i>'
+								],
+								navClass: [
+									'owl-prev tg-btnround tg-btnprev',
+									'owl-next tg-btnround tg-btnnext'
+								],
+							});
+						}
+						if(index == 1){
+							$.each(data, function(key,a){
+								str = ``;
+								$.each(data,function(key, a){
+									str += `
+										<div class="item">
+											<div class="tg-postbook">
+												<figure class="tg-featureimg">
+													<div class="tg-bookimg">
+														<div class="tg-frontcover"><img src="../images/books/${a.anh}" alt="image description"></div>
+														<div class="tg-backcover"><img src="../images/books/${a.anh}" alt="image description"></div>
+													</div>
+													<a class="tg-btnaddtowishlist" href="javascript:void(0);">
+														<i class="icon-heart"></i>
+														<span>Yêu thích</span>
+													</a>
+												</figure>
+												<div class="tg-postbookcontent">
+													<ul class="tg-bookscategories">
+														<li><a href="javascript:void(0);"></a></li>
+														<input id="MaSach" asp-for="${a.maSach}" type="hidden" />
+													</ul>
+													<div class="tg-themetagbox"><span class="tg-themetag">sale</span></div>
+													<div class="tg-booktitle">
+														<h3><a href="javascript:void(0);">${a.tenSach}</a></h3>
+													</div>
+													<span class="tg-bookwriter">Bởi: <a href="javascript:void(0);">${a.tenTg}</a></span>
+														<span class="tg-stars"><span></span></span>
+													<span class="tg-bookprice">
+														<ins>${new Intl.NumberFormat().format(a.giaBan)} VNĐ</ins>
+													</span>
+													<a class="tg-btn tg-btnstyletwo add-to-cart" data-maSach="${a.maSach}" href="javascript:void(0);">
+														<i class="fa fa-shopping-basket"></i>
+														<em>Thêm vào giỏ</em>
+													</a>
+												</div>
+											</div>
+										</div>
+									`
+								})
+							})
+
+							$('#tg-bestsellingbooksslider').owlCarousel('destroy');
+
+							$('#tg-bestsellingbooksslider').html(str);
+
+							$('#tg-bestsellingbooksslider').owlCarousel({
+								nav: true,
+								loop: true,
+								margin: 30,
+								dots: true,
+								navText: [
+									'<i class="icon-chevron-left"></i>',
+									'<i class="icon-chevron-right"></i>'
+								],
+								navClass: [
+									'owl-prev tg-btnround tg-btnprev',
+									'owl-next tg-btnround tg-btnnext'
+								],
+								responsive: {
+									0: { items: 1 },
+									480: { items: 2 },
+									600: { items: 3 },
+									1000: { items: 5 },
+									1200: { items: 6 },
+								}
+							});
+						}
+						if (index == 2) {
+							$.each(data, function (key, a) {
+								str = ``;
+								for(let i = 0; i < 3; i++){
+									str += `
+										<div class="col-xs-4 col-sm-4 col-md-6 col-lg-4">
+											<div class="tg-postbook">
+												<figure class="tg-featureimg">
+													<div class="tg-bookimg">
+														<div class="tg-frontcover"><img src="../images/books/${data[i].anh}" alt="image description"></div>
+														<div class="tg-backcover"><img src="../images/books/${data[i].anh}" alt="image description"></div>
+													</div>
+													<a class="tg-btnaddtowishlist" href="javascript:void(0);">
+														<i class="icon-heart"></i>
+														<span>Yêu thích</span>
+													</a>
+												</figure>
+												<div class="tg-postbookcontent">
+													<ul class="tg-bookscategories">
+														<li><a href="javascript:void(0);">Phiêu lưu</a></li>
+														<li><a href="javascript:void(0);">Hài hước</a></li>
+													</ul>
+													<div class="tg-booktitle">
+														<h3><a href="javascript:void(0);">${data[i].tenSach}</a></h3>
+													</div>
+													<span class="tg-bookwriter">Bởi: <a href="javascript:void(0);">${data[i].tenTg}</a></span>
+													<span class="tg-stars"><span></span></span>
+												</div>
+											</div>
+										</div>
+									`
+								}
+							})
+
+							section.innerHTML = str;
+						}
+						if (index == 3) {
+							$.each(data, function (key, a) {
+								str = ``;
+								$.each(data, function (key, a) {
+									str += `
+										<div class="item">
+										<div class="tg-postbook">
+											<figure class="tg-featureimg">
+												<div class="tg-bookimg">
+													<div class="tg-frontcover"><img src="../images/books/${a.anh}" alt="image description"></div>
+												</div>
+												<div class="tg-hovercontent">
+													<div class="tg-description">
+														<p>${a.moTa}</p>
+													</div>
+													<strong class="tg-bookpage">Số trang: 206</strong>
+													<strong class="tg-bookcategory">Thể loại: Phiêu lưu</strong>
+														<strong class="tg-bookprice">Giá: ${new Intl.NumberFormat().format(a.giaBan)} VNĐ</strong>
+													<div class="tg-ratingbox"><span class="tg-stars"><span></span></span></div>
+												</div>
+											</figure>
+											<div class="tg-postbookcontent">
+												<div class="tg-booktitle">
+													<h3><a href="javascript:void(0);">${a.tenSach}</a></h3>
+												</div>
+													<span class="tg-bookwriter">Bởi: <a href="javascript:void(0);">${a.tenTg}</a></span>
+													<a class="tg-btn tg-btnstyletwo add-to-cart" data-maSach="${a.maSach}" href="javascript:void(0);">
+													<i class="fa fa-shopping-basket"></i>
+													<em>Thêm vào giỏ</em>
+												</a>
+											</div>
+										</div>
+									</div>
+									`
+								})
+							})
+
+							$('#tg-pickedbyauthorslider').owlCarousel('destroy');
+
+							$('#tg-pickedbyauthorslider').html(str);
+
+							$('#tg-pickedbyauthorslider').owlCarousel({
+								nav: true,
+								loop: true,
+								dots: true,
+								navText: [
+									'<i class="icon-chevron-left"></i>',
+									'<i class="icon-chevron-right"></i>'
+								],
+								navClass: [
+									'owl-prev tg-btnround tg-btnprev',
+									'owl-next tg-btnround tg-btnnext'
+								],
+								responsive: {
+									0: { items: 1 },
+									768: { items: 2 },
+									992: { items: 3 },
+								}
+							});
+						}
+						if (index == 4) {
+							$.each(data, function (key, a) {
+								str = ``;
+								$.each(data, function (key, a) {
+									str += `
+										<div class="item tg-author">
+											<figure><a href="javascript:void(0);"><img src="../User/images/team/${a.anh}" alt="image description"></a></figure>
+											<div class="tg-authorcontent">
+												<h2><a href="javascript:void(0);">${a.tenTg}</a></h2>
+												<span>21,658 Sách xuất bản</span>
+												<ul class="tg-socialicons">
+													<li class="tg-facebook"><a href="javascript:void(0);"><i class="fa fa-facebook"></i></a></li>
+													<li class="tg-twitter"><a href="javascript:void(0);"><i class="fa fa-twitter"></i></a></li>
+													<li class="tg-linkedin"><a href="javascript:void(0);"><i class="fa fa-linkedin"></i></a></li>
+												</ul>
+											</div>
+										</div>
+									`
+								})
+							})
+
+							$('#tg-authorsslider').owlCarousel('destroy');
+
+							$('#tg-authorsslider').html(str);
+
+							$('#tg-authorsslider').owlCarousel({
+								nav: true,
+								loop: true,
+								dots: true,
+								navText: [
+									'<i class="icon-chevron-left"></i>',
+									'<i class="icon-chevron-right"></i>'
+								],
+								navClass: [
+									'owl-prev tg-btnround tg-btnprev',
+									'owl-next tg-btnround tg-btnnext'
+								],
+								responsive: {
+									0: { items: 1 },
+									600: { items: 4 },
+									1000: { items: 5 },
+									1200: { items: 6 },
+								}
+							});
+						}
+					})
+				},
+				Error: function (xhr) {
+					alert(xhr.responseText)
+				}
+			});
 		});
 	</script>
 }
